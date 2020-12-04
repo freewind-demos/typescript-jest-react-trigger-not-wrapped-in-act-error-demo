@@ -1,24 +1,37 @@
-//import * as React from 'react'
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
 type Props = {
   name: string
-  onChange: (value: string) => void
+  asyncHandleValue?: (value: string) => Promise<string>
 }
 
-export default function Hello(props: Props) {
+async function defaultAsyncHandleValue(v: string): Promise<string> {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(`${v}!`)
+    }, 1000);
+  })
+}
 
-  const [name, setName] = useState(props.name)
+export default function Hello({ name, asyncHandleValue = defaultAsyncHandleValue }: Props) {
 
-  function onChange(event: React.ChangeEvent<HTMLInputElement>) {
+  // should have a internal state
+  const [someState, setSomeState] = useState(name);
+
+  async function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const value = event.currentTarget?.value;
-    setName(value);
-    props.onChange(value);
+
+    // should have an async operation
+    // 'asyncHandleValue' should be mocked from jest.fn
+    const fixedValue = await asyncHandleValue(value);
+    // the state should be updated after unmount
+    setSomeState(fixedValue);
   }
 
   return <div>
-    <div>Hello, {name}</div>
-    <input type='text' value={name} onChange={onChange}/>
+    {/* {someState} should be used in DOM*/}
+    <div>Hello, {someState}</div>
+    <input type='text' value={name} onChange={handleChange}/>
   </div>
 };
 

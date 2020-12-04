@@ -8,7 +8,9 @@
     "react-dom": "16.10.2"
   },
   "devDependencies": {
+    "@testing-library/dom": "7.28.1",
     "@testing-library/react": "9.3.0",
+    "@testing-library/user-event": "12.5.0",
     "@types/jest": "24.0.19",
     "@types/karma": "3.0.3",
     "@types/node": "12.11.1",
@@ -23,6 +25,7 @@
     "ts-jest": "24.1.0",
     "ts-loader": "6.2.0",
     "typescript": "3.8.2",
+    "user-event": "4.0.0",
     "webpack": "4.41.2",
     "webpack-cli": "3.3.9",
     "webpack-dev-server": "3.8.2"
